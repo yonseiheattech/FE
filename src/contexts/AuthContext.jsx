@@ -5,6 +5,7 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [role, setRole] = useState(null)
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -12,7 +13,9 @@ export const AuthProvider = ({ children }) => {
       .get("/api/members/me")
       .then((res) => {
         console.log("나는 AuthContext", res.data)
-        setUser(res.data);
+        setUser(res.data.username);
+        setRole(res.data.role)
+    
       })
       .catch(() => {
         console.log("skrrr1")
@@ -28,7 +31,7 @@ export const AuthProvider = ({ children }) => {
   const isLoggedIn = !!user;
 
   return (
-    <AuthContext.Provider value={{ user, isLoggedIn, loading }}>
+    <AuthContext.Provider value={{ user, role, isLoggedIn, loading }}>
       {children}
     </AuthContext.Provider>
   );
