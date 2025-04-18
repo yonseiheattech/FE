@@ -22,19 +22,33 @@ const MapBox = () => {
       window.kakao.maps.load(() => {
         const container = document.getElementById("map");
 
-        
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const {latitude, longitude} = position.coords;
+            const options = {
+              center: new window.kakao.maps.LatLng(latitude, longitude),
+              level: 3,
+            };
+            new window.kakao.maps.Map(container, options);
+          },
+          (error) => {
+            console.warn("위치가져오기 실패 그냥 서울시청으로 할게", error);
+
+            const options = {
+              center: new window.kakao.maps.LatLng(37.5665, 126.978),
+              level: 3,
+            };
+            new window.kakao.maps.Map(container, options);
+    
+            console.log("성공");
+
+          }
+        )
 
         
 
-
-
-        const options = {
-          center: new window.kakao.maps.LatLng(37.5665, 126.978),
-          level: 3,
-        };
-        new window.kakao.maps.Map(container, options);
-
-        console.log("성공");
+        
+        
       });
     };
 
