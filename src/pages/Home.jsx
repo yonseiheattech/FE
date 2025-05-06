@@ -20,7 +20,36 @@ const Home = () => {
           {/**/}
 
           {/*실시간 온기*/}
-          <div className="w-[387px] h-[243px] flex-shrink-0 bg-[#FFF] stroke-[#DCDCDC] strocke-[1px] relative"></div>
+          <div>
+            <div className="w-[387px] h-[243px] flex-shrink-0 flex justify-center items-start flex-row gap-[197px] bg-[#FFF] rounded-[40px] border-[1px] border-[#DCDCDC] relative">
+              <div className='w-[105px] h-[30px] p-0 mt-[33px] ml-[35px] text-center text-[#3A2A10] font-[700] text-[21px] leading-normal tracking-[-0.36px] font-[Pretendard]'>실시간 온기</div>
+              <div className='w-[24px] h-[30px] mt-[30px] mr-[16px]'>
+                <button className="text-center text-[#3A2A10]">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="30px" viewBox="0 0 24 30" fill="none">
+                    <path d="M9 22.5L15 15L9 7.5" stroke="#3A2A10" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+          {/* */}
+
+          {/*공지사항*/}
+          <div>
+
+            <div className='flex-1 flex justify-between items-start flex-row gap-[220px]'>
+              <div className='w-[105px] h-[30px] p-0 mt-[33px] ml-[35px] text-center text-[#3A2A10] font-[700] text-[21px] leading-normal tracking-[-0.36px] font-[Pretendard]'>공지사항</div>
+              <div className='w-[24px] h-[24px] mt-[55px] mr-[55px]'>
+                <button>
+                  <svg className="w-[24px] h-[24px] stroke-gray-800" fill="none" viewBox="0 0 24 24">
+                    <path d="M12 5V19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+          </div>
 
           {/* */}
 
