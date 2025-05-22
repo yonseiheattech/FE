@@ -13,9 +13,9 @@ const KakaoCallback = () => {
         if(!alreadyCalled.current && code) {
             alreadyCalled.current = true;
 
-            axiosInstance.post("http://localhost:8080/api/kakao/login", {code})
+            axiosInstance.post("/api/kakao/login", {code})
             .then(() => {
-                window.location.replace("/home");
+                window.location.replace("/");
             })
             .catch((err) => {
                 console.error("카카오 로그인 실팽", err.response.data.error);

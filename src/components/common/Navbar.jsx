@@ -1,25 +1,34 @@
 import { Globe } from "lucide-react";
-import { useAuth } from "../contexts/AuthContext";
-import axiosInstance from "../api/axiosInstance";
+import { useAuth } from "../../contexts/AuthContext";
+import axiosInstance from "../../api/axiosInstance";
+import { Link } from "react-router-dom"
 
 export default function Navbar() {
-  const { user, isLoggedIn } = useAuth();
+  const { user, isLoggedIn, role } = useAuth();
+  
 
   return (
     <nav className="flex items-center justify-between px-8 py-4 shadow-sm bg-white">
       {/*Left - 로고 */}
-      <div className="flex items-center gap-2">
+      <Link to="/" className="flex items-center gap-2">
         <img src="/logo.png" alt="logo" className="w-auto h-6" />
         <span className="font-bold text-yellow-500">온기</span>
         <span className="font-bold text-[#6B3E00]">우편함</span>
-      </div>
+      </Link>
 
       {/* Center - 메뉴 */}
       <ul className="flex gap-10 font-semibold text-sm text-black">
         <li className="hover:text-[#6B3E00] cursor-pointer">온기 소개</li>
         <li className="hover:text-[#6B3E00] cursor-pointer">이용 방법</li>
         <li className="hover:text-[#6B3E00] cursor-pointer">공지사항</li>
-        <li className="text-[#6B3E00] cursor-pointer font-bold">내 편지</li>
+        <li className="text-[#6B3E00] cursor-pointer font-bold">
+          <Link to="/my-letter">내 편지</Link>
+        </li>
+        {role === "VOLUNTEER" && (
+          <li className="hover:text-[#6B3E00] cursor-pointer font-bold">
+            <Link to="/volunteer/my-letter">온기 우체부</Link>
+          </li>
+        )}
       </ul>
 
       {/* Right - 언어 선택 & 로그인 */}

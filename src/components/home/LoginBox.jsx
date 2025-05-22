@@ -1,6 +1,6 @@
 import { useState } from "react";
-import axios from "../api/axiosInstance";
 import KakaoLoginButton from "./KakaoLoginButton";
+import axiosInstance from "../../api/axiosInstance";
 
 const LoginBox = () => {
   const [username, setUsername] = useState("");
@@ -9,15 +9,18 @@ const LoginBox = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
-        "http://localhost:8080/api/members/login",
+      const response = await axiosInstance.post(
+        "/api/members/login",
         {
           username,
           password,
         }
       );
       console.log("✅ 로그인 성공:", response.data);
-      window.location.replace("/home");
+
+      setTimeout(() => {
+        window.location.replace("/");
+      }, 1000);
     } catch (err) {
       console.error("❌ 로그인 실패 from LoginBox.jsx", err);
       alert("아이디 또는 비밀번호가 잘못되었습니다.");

@@ -1,7 +1,11 @@
-import LoginBox from '../components/LoginBox'
-import MapBox from '../components/MapBox'
+import LoginBox from '../components/home/LoginBox'
+import MapBox from '../components/home/MapBox'
+import LoggedInBox from '../components/LoggedInBox';
+import { useAuth } from "../contexts/AuthContext";
 
 const Home = () => {
+  const { isLoggedIn, loading } = useAuth();
+
   return (
     <div className='flex min-h-screenc justify-center items-start flex-row gap-[112px] pt-24 bg-gradient-to-br from-[#FFFBE9] to-[#FFFDF6]'>
 
@@ -13,7 +17,13 @@ const Home = () => {
           <div>
 
             <div className='flex-1 mb-[79px]'>
+              {loading ? (
+              <div className="text-gray-500">로딩 중...</div>
+            ) : isLoggedIn ? (
+              <LoggedInBox />
+            ) : (
               <LoginBox />
+            )}
             </div>
 
           </div>
