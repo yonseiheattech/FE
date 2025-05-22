@@ -18,8 +18,9 @@ export default function Navbar() {
 
       {/* Center - 메뉴 */}
       <ul className="flex gap-10 font-semibold text-sm text-black">
-        <li className="hover:text-[#6B3E00] cursor-pointer">온기 소개</li>
-        <li className="hover:text-[#6B3E00] cursor-pointer">이용 방법</li>
+        <li className="hover:text-[#6B3E00] cursor-pointer">
+          <Link to="/usage-guide">이용 방법</Link>
+        </li>
         <li className="hover:text-[#6B3E00] cursor-pointer">공지사항</li>
         <li className="text-[#6B3E00] cursor-pointer font-bold">
           <Link to="/my-letter">내 편지</Link>

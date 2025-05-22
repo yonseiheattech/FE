@@ -16,7 +16,7 @@ const VolLetterMenu = () => {
         내가 답장한 편지들
       </button>
       <button
-        onClick={() => navigate("/code")}
+        onClick={() => navigate("/volunteer/write-together")}
         className="w-full text-left border-b border-[#D6BA83] text-[#3A2A10] text-base py-3 hover:font-semibold"
       >
         편지 함께 쓰기
