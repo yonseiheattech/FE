@@ -2,9 +2,29 @@ import LoginBox from "../components/home/LoginBox";
 import MapBox from "../components/home/MapBox";
 import LoggedInBox from "../components/LoggedInBox";
 import { useAuth } from "../contexts/AuthContext";
+import React, { useRef, useEffect, useState } from "react";
+import axiosInstance from "../api/axiosInstance";
+
+
 
 const Home = () => {
   const { isLoggedIn, loading } = useAuth();
+  const [thanksMessages, setThanksMessages] = useState([]);
+
+  useEffect(() => {
+    axiosInstance.get("/api/thanks")
+      .then((res) => { setThanksMessages(res.data); })
+      .catch((err) => { console.log(err); });
+  }, []);
+
+  const scrollRef = useRef(null);
+
+  useEffect(() => {
+    const scrollDiv = scrollRef.current;
+    if (scrollDiv) {
+      scrollDiv.scrollTop = scrollDiv.scrollHeight;
+    }
+  }, [thanksMessages.length]);
 
   return (
     <div className="flex min-h-screen justify-center items-start pt-24 px-6 bg-gradient-to-br from-[#FFFBE9] to-[#FFFDF6] gap-20">
@@ -23,27 +43,29 @@ const Home = () => {
 
         {/* 실시간 온기 박스 */}
         <section>
-          <div className="w-full bg-white rounded-3xl border border-[#DCDCDC] flex items-center justify-between px-7 py-5 shadow-sm">
-            <span className="text-[#3A2A10] font-bold text-lg">
-              실시간 온기
-            </span>
-            <button>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24px"
-                height="30px"
-                viewBox="0 0 24 30"
-                fill="none"
-              >
-                <path
-                  d="M9 22.5L15 15L9 7.5"
-                  stroke="#3A2A10"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </button>
+          <div className="w-full bg-white rounded-3xl border border-[#DCDCDC] px-7 py-5 shadow-sm">
+            <div className="flex items-center justify-between mb-4">
+              <span className="text-[#3A2A10] font-bold text-lg">
+                실시간 온기
+              </span>
+              <button>{/* 아이콘 */}</button>
+            </div>
+            {/* 스크롤 가능한 영역 */}
+            <div ref={scrollRef} className="flex flex-col gap-3 max-h-48 overflow-y-auto pr-2">
+              {thanksMessages.map((item) => (
+                <div
+                  key={item.id}
+                  className="max-w-xs bg-[#FEF3CC] text-[#3A2A10] rounded-xl px-4 py-3 shadow-sm relative ml-4"
+                >
+                  {item.content}
+                  {/* 왼쪽 위 꼭짓점 꼬리 */}
+                  <span
+                    className="absolute left-0 top-0 w-4 h-4 bg-[#FEF3CC] rotate-45 rounded-sm"
+                    style={{ transform: "translate(-40%, -40%)" }}
+                  ></span>
+                </div>
+              ))}
+            </div>
           </div>
         </section>
 
@@ -154,7 +176,11 @@ function HomeCard({ img, alt, label, yellowCircle }) {
         <div className="w-[145px] h-[145px] rounded-full bg-[radial-gradient(50%_50%_at_50%_50%,rgba(255,215,4,0.44)_0%,#FFF_68.5%)] absolute top-[22px] left-1/2 -translate-x-1/2 -z-10"></div>
       )}
       <div className="flex flex-col items-center justify-center flex-1 w-full">
-        <img src={img} alt={alt} className="max-w-[85%] max-h-[110px] object-contain mx-auto my-4 z-10" />
+        <img
+          src={img}
+          alt={alt}
+          className="max-w-[85%] max-h-[110px] object-contain mx-auto my-4 z-10"
+        />
         <div className="text-center text-[#3A2A10] font-bold text-[18px] leading-[23px] tracking-[-0.36px] mb-6 z-10">
           {label}
         </div>
