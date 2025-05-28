@@ -2,35 +2,40 @@ name: Deploy React FE to EC2
 
 on:
   push:
-    branches: [dev]  # main 브랜치 push시 자동배포
+    branches: [dev] # main 브랜치 push시 자동배포
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    - name: Use Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '20'
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
 
-    - name: Install dependencies
-      run: npm install
+      - name: Install dependencies
+        run: npm install
 
-    - name: Build React app
-      run: npm run build
+      - name: Make .env file
+        run: |
+            echo "REACT_APP_KAKAO_REST_API_KEY=${{ secrets.REACT_APP_KAKAO_REST_API_KEY }}" >> .env
+            echo "REACT_APP_KAKAO_REDIRECT_URI=${{ secrets.REACT_APP_KAKAO_REDIRECT_URI }}" >> .env
 
-    - name: Prepare SSH Key
-      run: |
-        echo "${{ secrets.HEATTECH_PEM }}" > heattech.pem
-        chmod 600 heattech.pem
+      - name: Build React app
+        run: npm run build
 
-    - name: Deploy to EC2 via SCP
-      run: |
-        scp -i heattech.pem -o StrictHostKeyChecking=no -r build/. ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:/home/ubuntu/FE/
+      - name: Prepare SSH Key
+        run: |
+            echo "${{ secrets.HEATTECH_PEM }}" > heattech.pem
+            chmod 600 heattech.pem
+
+      - name: Deploy to EC2 via SCP
+        run: |
+            scp -i heattech.pem -o StrictHostKeyChecking=no -r build/. ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:/home/ubuntu/FE/
 
     # 필요하면 아래에 서버 리로드 명령 추가 (Nginx 사용시)
     # - name: Reload Nginx
