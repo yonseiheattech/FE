@@ -1,168 +1,190 @@
-import LoginBox from '../components/home/LoginBox'
-import MapBox from '../components/home/MapBox'
-import LoggedInBox from '../components/LoggedInBox';
+import LoginBox from "../components/home/LoginBox";
+import MapBox from "../components/home/MapBox";
+import LoggedInBox from "../components/LoggedInBox";
 import { useAuth } from "../contexts/AuthContext";
 
 const Home = () => {
   const { isLoggedIn, loading } = useAuth();
 
   return (
-    <div className='flex min-h-screenc justify-center items-start flex-row gap-[112px] pt-24 bg-gradient-to-br from-[#FFFBE9] to-[#FFFDF6]'>
+    <div className="flex min-h-screen justify-center items-start pt-24 px-6 bg-gradient-to-br from-[#FFFBE9] to-[#FFFDF6] gap-20">
+      {/* 왼쪽 영역 */}
+      <div className="flex-1 flex flex-col gap-10 max-w-md">
+        {/* 로그인 영역 */}
+        <section>
+          {loading ? (
+            <div className="text-gray-500">로딩 중...</div>
+          ) : isLoggedIn ? (
+            <LoggedInBox />
+          ) : (
+            <LoginBox />
+          )}
+        </section>
 
-
-      {/*왼쪽 라인*/}
-      <div>
-        <div className='flex-1 flex justify-center flex-col'>
-          {/*로그인*/}
-          <div>
-
-            <div className='flex-1 mb-[79px]'>
-              {loading ? (
-              <div className="text-gray-500">로딩 중...</div>
-            ) : isLoggedIn ? (
-              <LoggedInBox />
-            ) : (
-              <LoginBox />
-            )}
-            </div>
-
+        {/* 실시간 온기 박스 */}
+        <section>
+          <div className="w-full bg-white rounded-3xl border border-[#DCDCDC] flex items-center justify-between px-7 py-5 shadow-sm">
+            <span className="text-[#3A2A10] font-bold text-lg">
+              실시간 온기
+            </span>
+            <button>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24px"
+                height="30px"
+                viewBox="0 0 24 30"
+                fill="none"
+              >
+                <path
+                  d="M9 22.5L15 15L9 7.5"
+                  stroke="#3A2A10"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </button>
           </div>
-          {/**/}
+        </section>
 
-          {/*실시간 온기*/}
-          <div>
-            <div className="w-[387px] h-[243px] flex-shrink-0 flex justify-center items-start flex-row gap-[197px] bg-[#FFF] rounded-[40px] border-[1px] border-[#DCDCDC] relative">
-              <div className='w-[105px] h-[30px] p-0 mt-[33px] ml-[35px] text-center text-[#3A2A10] font-[700] text-[21px] leading-normal tracking-[-0.36px] font-[Pretendard]'>실시간 온기</div>
-              <div className='w-[24px] h-[30px] mt-[30px] mr-[16px]'>
-                <button className="text-center text-[#3A2A10]">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="30px" viewBox="0 0 24 30" fill="none">
-                    <path d="M9 22.5L15 15L9 7.5" stroke="#3A2A10" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                  </svg>
-                </button>
-              </div>
-            </div>
+        {/* 공지사항 박스 */}
+        <section>
+          <div className="w-full flex items-center justify-between bg-white rounded-3xl border border-[#DCDCDC] px-7 py-5 shadow-sm">
+            <span className="text-[#3A2A10] font-bold text-lg">공지사항</span>
+            <button>
+              <svg
+                className="w-6 h-6 stroke-gray-800"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M12 5V19"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M5 12H19"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </button>
           </div>
-          {/* */}
-
-          {/*공지사항*/}
-          <div>
-
-            <div className='flex-1 flex justify-between items-start flex-row gap-[220px]'>
-              <div className='w-[105px] h-[30px] p-0 mt-[33px] ml-[35px] text-center text-[#3A2A10] font-[700] text-[21px] leading-normal tracking-[-0.36px] font-[Pretendard]'>공지사항</div>
-              <div className='w-[24px] h-[24px] mt-[55px] mr-[55px]'>
-                <button>
-                  <svg className="w-[24px] h-[24px] stroke-gray-800" fill="none" viewBox="0 0 24 24">
-                    <path d="M12 5V19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                    <path d="M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                  </svg>
-                </button>
-              </div>
-            </div>
-
-          </div>
-
-          {/* */}
-
-        </div>
+        </section>
       </div>
 
-      {/* */}
+      {/* 오른쪽 영역 */}
+      <div className="w-full max-w-[760px] flex flex-col items-center">
+        {/* 지도 */}
+        <div className="w-full mb-10">
+          <MapBox />
+        </div>
 
-      {/* 오른쪽 라인 */}
+        {/* 4개 박스 */}
+        <div className="w-full flex flex-row justify-between gap-x-8 mb-12">
+          <HomeCard
+            img="온기우편함 이용.png"
+            alt="온기우편함 이용 안내"
+            label={
+              <>
+                온기우편함
+                <br />
+                이용 안내
+              </>
+            }
+            yellowCircle
+          />
+          <HomeCard
+            img="온라인 온기우편함.png"
+            alt="온라인 온기우편함 이용 안내"
+            label={
+              <>
+                온라인 온기우편함
+                <br />
+                이용 안내
+              </>
+            }
+          />
+          <HomeCard
+            img="온기우체부 지원.png"
+            alt="온기우체부 지원하기"
+            label={
+              <>
+                온기우체부
+                <br />
+                지원하기
+              </>
+            }
+            yellowCircle
+          />
+          <HomeCard
+            img="랜선 온기우체부.png"
+            alt="랜선 온기우체부 지원하기"
+            label={
+              <>
+                랜선 온기우체부
+                <br />
+                지원하기
+              </>
+            }
+            yellowCircle
+          />
+        </div>
 
-      <div>
-        <div className='flex-1 flex justify-between flex-col'>
-
-          {/*맵*/}
-          <div className='flex-1 flex justify-center mb-[43px]'>
-            <MapBox />
-          </div>
-          {/* */}
-
-
-          {/*맵 아래 박스 4개*/}
-          <div className='flex-1 flex justify-center flex-row gap-[22px] mb-[36px]'>
-
-            <div className="w-[185px] h-[247px] flex-shrink-0 border-[1.897px] border-[#DCDCDC] rounded-[28.191px] bg-white shadow-[0_4px_4px_rgba(0,0,0,0.04)] relative">
-              <div className='w-[145px] h-[145px] rounded-full bg-[radial-gradient(50%_50%_at_50%_50%,rgba(255,215,4,0.44)_0%,#FFF_68.5%)] absolute top-[22px] left-1/2 -translate-x-1/2' ></div>
-              <div className='w-[71.262px] h-[128px]  flex-shrink-0 flex justify-center  aspect-[71.26/128] absolute top-[34px] left-[54px] right-[59.74px] -translate-z-1'><img src="온기우편함 이용.png" alt="온기우편함 이용 안내" /></div>
-              <div className='text-center text-[#3A2A10] font-[700] text-[18px] leading-[23px] tracking-[-0.36px] font-[Pretendard] absolute top-[167px] left-1/2 -translate-x-1/2'>온기우편함<br />이용 안내</div>
-            </div>
-
-            <div className="w-[185px] h-[247px] flex-shrink-0 border-[1.897px] border-[#DCDCDC] rounded-[28.191px] bg-white shadow-[0_4px_4px_rgba(0,0,0,0.04)] relative">
-              <div className='w-[146.545px] h-[129px]  flex-shrink-0  aspect-[146.55/129.00] absolute top-[35px] left-[19px] right-[19.45px] -translate-x-0 -translate-y-0 -translate-z-1'><img src="온라인 온기우편함.png" alt="온라인 온기우편함 이용 안내" /></div>
-              <div className='w-[200px] h-[46px] text-center text-[#3A2A10] font-[700] text-[18px] leading-[23px] tracking-[-0.36px] font-[Pretendard] absolute top-[167px] left-1/2 -translate-x-1/2'>온라인 온기우편함<br />이용 안내</div>
-            </div>
-
-
-            <div className="w-[185px] h-[247px] flex-shrink-0 border-[1.897px] border-[#DCDCDC] rounded-[28.191px] bg-white shadow-[0_4px_4px_rgba(0,0,0,0.04)] relative">
-              <div className='w-[145px] h-[145px] rounded-full bg-[radial-gradient(50%_50%_at_50%_50%,rgba(255,215,4,0.44)_0%,#FFF_68.5%)] absolute top-[22px] left-1/2 -translate-x-1/2' ></div>
-              <div className="w-[145.645px] h-[86px]  flex-shrink-0 flex justify-center  aspect-[145.65/86] absolute top-[62px] left-[38px] -translate-z-1"><img src="온기우체부 지원.png" alt="온기우체부 지원하기" /></div>
-              <div className="w-[200px] h-[46px] text-center text-[#3A2A10] font-[700] text-[18px] leading-[23px] tracking-[-0.36px] font-[Pretendard] absolute top-[167px] left-1/2 -translate-x-1/2">온기우체부<br />지원하기</div>
-            </div>
-
-            <div className="w-[185px] h-[247px] flex-shrink-0 border-[1.897px] border-[#DCDCDC] rounded-[28.191px] bg-white shadow-[0_4px_4px_rgba(0,0,0,0.04)] relative">
-              <div className='w-[145px] h-[145px] rounded-full bg-[radial-gradient(50%_50%_at_50%_50%,rgba(255,215,4,0.44)_0%,#FFF_68.5%)] absolute top-[22px] left-1/2 -translate-x-1/2' ></div>
-              <div className="w-[211.458px] h-[125px]  flex-shrink-0 flex justify-center  aspect-[211.46/125] absolute top-[42px] left-[2px] -translate-z-1"><img src="랜선 온기우체부.png" alt="랜선 온기우체부 지원하기" /></div>
-              <div className='w-[200px] h-[46px] text-center text-[#3A2A10] font-[700] text-[18px] leading-[23px] tracking-[-0.36px] font-[Pretendard] absolute top-[167px] left-1/2 -translate-x-1/2'>랜선 온기우체부<br />지원하기</div>
-            </div>
-
-          </div>
-          {/* */}
-
-          {/*맨 아래 요소 3개*/}
-          <div className='flex-1 flex justify-center flex-row gap-[34px]'>
-
-
-            <div className='w-[245px] h-[70px] flex-shrink-0 flex justify-center items-center gap-[9px] border-[1.879px] border-[#DCDCDC] rounded-[40px] bg-[#FFF3B3] shadow-[0_4px_4px_0px_rbga(0,0,0,0.04)]'>
-
-              <div className='w-[135px] h-[23px] text-center text-[#3A2A10] font-[700] text-[18px] leading-[23px] tracking-[-0.36px] font-[Pretendard]'>온기레터 구독하기</div>
-              <div className='w-[24px] h-[30px]'>
-                <button className="text-center text-[#3A2A10]">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="30px" viewBox="0 0 24 30" fill="none">
-                    <path d="M9 22.5L15 15L9 7.5" stroke="#3A2A10" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                  </svg>
-                </button>
-              </div>
-
-            </div>
-
-
-
-            <div className='w-[245px] h-[70px] flex-shrink-0 flex justify-center items-center gap-[9px] border-[1.879px] border-[#DCDCDC] rounded-[40px] bg-[#FFF3B3] shadow-[0_4px_4px_0px_rbga(0,0,0,0.04)]'>
-
-              <div className='w-[135px] h-[23px] text-center text-[#3A2A10] font-[700] text-[18px] leading-[23px] tracking-[-0.36px] font-[Pretendard]'>파트너십 문의</div>
-              <div className='w-[24px] h-[30px]'>
-                <button className="text-center text-[#3A2A10]">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="30px" viewBox="0 0 24 30" fill="none">
-                    <path d="M9 22.5L15 15L9 7.5" stroke="#3A2A10" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                  </svg>
-                </button>
-              </div>
-
-            </div>
-
-            <div className='w-[245px] h-[70px] flex-shrink-0 flex justify-center items-center gap-[9px] border-[1.879px] border-[#DCDCDC] rounded-[40px] bg-[#FFF3B3] shadow-[0_4px_4px_0px_rbga(0,0,0,0.04)]'>
-
-              <div className='w-[135px] h-[23px] text-center text-[#3A2A10] font-[700] text-[18px] leading-[23px] tracking-[-0.36px] font-[Pretendard]'>온기 후원하기</div>
-              <div className='w-[24px] h-[30px]'>
-                <button className="text-center text-[#3A2A10]">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="30px" viewBox="0 0 24 30" fill="none">
-                    <path d="M9 22.5L15 15L9 7.5" stroke="#3A2A10" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                  </svg>
-                </button>
-              </div>
-
-            </div>
-
-          </div>
-          {/* */}
-
+        {/* 맨 아래 버튼 3개 */}
+        <div className="w-full flex flex-row justify-between gap-6">
+          <HomeBottomButton label="온기레터 구독하기" />
+          <HomeBottomButton label="파트너십 문의" />
+          <HomeBottomButton label="온기 후원하기" />
         </div>
       </div>
-      {/* */}
     </div>
   );
 };
+
+// 홈 박스 카드 컴포넌트
+function HomeCard({ img, alt, label, yellowCircle }) {
+  return (
+    <div className="w-[185px] h-[247px] bg-white border border-[#DCDCDC] rounded-[28px] shadow-[0_4px_4px_rgba(0,0,0,0.04)] flex flex-col items-center justify-end relative overflow-hidden">
+      {yellowCircle && (
+        <div className="w-[145px] h-[145px] rounded-full bg-[radial-gradient(50%_50%_at_50%_50%,rgba(255,215,4,0.44)_0%,#FFF_68.5%)] absolute top-[22px] left-1/2 -translate-x-1/2 -z-10"></div>
+      )}
+      <div className="flex flex-col items-center justify-center flex-1 w-full">
+        <img src={img} alt={alt} className="max-w-[85%] max-h-[110px] object-contain mx-auto my-4 z-10" />
+        <div className="text-center text-[#3A2A10] font-bold text-[18px] leading-[23px] tracking-[-0.36px] mb-6 z-10">
+          {label}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// 홈 하단 버튼 컴포넌트
+function HomeBottomButton({ label }) {
+  return (
+    <button className="w-[245px] h-[70px] flex justify-center items-center gap-2 border border-[#DCDCDC] rounded-[40px] bg-[#FFF3B3] shadow-[0_4px_4px_0px_rgba(0,0,0,0.04)] text-[#3A2A10] font-bold text-[18px]">
+      {label}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24px"
+        height="30px"
+        viewBox="0 0 24 30"
+        fill="none"
+      >
+        <path
+          d="M9 22.5L15 15L9 7.5"
+          stroke="#3A2A10"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    </button>
+  );
+}
 
 export default Home;

@@ -8,11 +8,11 @@ function getStatusMessage(status) {
     case "REGISTERED":
       return "편지는 등록되었고 배송중입니다.";
     case "DELIVERED":
-      return "답장이 작성되었고 우체부님께 전달 중중입니다.";
+      return "도착하였습니다";
     case "REPLIED":
-      return "도착했습니다.";
+      return "답장이 작성되었고 온기님께 전달 중중입니다.";
     case "ISSUED":
-      return "편지 세부 상황을 확인하려면 등록 ㄱㄱ";
+      return "편지 세부 상황을 확인하려면 등록";
     default:
       return "편지 상태를 확인할 수 없습니다.";
   }
@@ -24,7 +24,7 @@ const LetterDetailPage = () => {
   const [letter, setLetter] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
+  const fetchLetter = () => {
     axiosInstance
       .get(`/api/letters/my/${code}`)
       .then((response) => {
@@ -35,7 +35,49 @@ const LetterDetailPage = () => {
         alert("편지 상세 정보 가져오기 실패", error);
         setLoading(false);
       });
+  };
+
+  useEffect(() => {
+    fetchLetter();
   }, [code]);
+
+  const handleSubmit = () => {
+    axiosInstance
+      .post(`/api/letters/deliver`, {
+        code: code,
+      })
+      .then((response) => {
+        alert("답장 수령 완료");
+        fetchLetter();
+      })
+      .catch((error) => {
+        alert("답장 수령 실패", error);
+      });
+  };
+
+  // 감사 인사 관련 state
+  const [thankYouMessage, setThankYouMessage] = useState("");
+  const [thankYouSent, setThankYouSent] = useState(false);
+
+  const handleThankYouSubmit = () => {
+    if (!thankYouMessage.trim()) {
+      alert("감사 인사를 입력해주세요!");
+      return;
+    }
+
+    axiosInstance
+      .post(`/api/thanks/${code}`, {
+        code: code,
+        content: thankYouMessage
+      })
+      .then((response) => {
+        alert("감사 인사 전달 완료");
+        setThankYouSent(true);
+      })
+      .catch((error) => {
+        alert("감사 인사 전달 실패", error);
+      });
+  };
 
   if (loading) {
     return <div>Loading...</div>;
@@ -58,7 +100,7 @@ const LetterDetailPage = () => {
           </div>
           <p className="mb-8">{getStatusMessage(letter?.status)}</p>
 
-          {letter?.status === "REGISTERED" && (
+          {letter?.status === "REPLIED" && (
             <>
               <div>
                 <label className="block text-[#3A2A10] font-bold mb-2 text-base">
@@ -74,12 +116,44 @@ const LetterDetailPage = () => {
               </div>
 
               <button
-                //onClick={handleSubmit}
+                onClick={handleSubmit}
                 className="mt-6 px-6 py-2 rounded bg-[#8A734F] text-white text-sm font-semibold hover:bg-[#705e3e]"
               >
                 답장 수령 완료
               </button>
             </>
+          )}
+          {/* DELIVERED 상태에서 감사 인사 입력 박스 노출 */}
+          {letter?.status === "DELIVERED" && (
+            <div className="mt-10">
+              <label className="block text-[#3A2A10] font-bold mb-2 text-base">
+                답장 써준 봉사자에게 감사의 인사를 남겨보세요
+              </label>
+              {/* 입력 박스 항상 노출 */}
+              <textarea
+                value={thankYouMessage}
+                onChange={(e) => setThankYouMessage(e.target.value)}
+                rows={3}
+                className="border border-[#D6BA83] rounded px-4 py-2 w-full text-sm text-[#8A734F] placeholder:text-[#D6BA83] resize-none"
+                placeholder="감사 인사를 입력해주세요"
+              />
+              <button
+                onClick={handleThankYouSubmit}
+                className="mt-4 px-6 py-2 rounded bg-[#A38951] text-white text-sm font-semibold hover:bg-[#8A734F]"
+              >
+                감사 인사 보내기
+              </button>
+
+              {/* 감사 인사 성공 시 박스 추가 */}
+              {thankYouSent && (
+                <div className="border border-[#A38951] rounded bg-[#f7f2e6] p-4 mt-6">
+                  <div className="font-bold text-[#3A2A10] mb-2">
+                    내가 남긴 감사 인사
+                  </div>
+                  <div className="text-[#8A734F]">{thankYouMessage}</div>
+                </div>
+              )}
+            </div>
           )}
         </div>
       </div>

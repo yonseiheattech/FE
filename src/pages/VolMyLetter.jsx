@@ -28,7 +28,11 @@ const VolMyLetter = () => {
     axiosInstance
       .get("/api/letters/my")
       .then((response) => {
-        setLetters(response.data);
+        const pureLetters = response.data.map(letter => ({
+          ...letter,
+          thanksNote: undefined
+        }));
+        setLetters(pureLetters);
         setLoading(false);
       })
       .catch((error) => {

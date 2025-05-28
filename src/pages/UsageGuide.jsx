@@ -45,16 +45,7 @@ const UsageGuide = () => {
         />
         {/* 오버레이 */}
         <div className="absolute w-full h-full bg-black/30 z-10" />
-        {/* 텍스트 */}
-        <div className="relative z-20 w-full flex flex-col justify-center items-end h-full pr-10">
-          <span className="text-white text-right text-2xl md:text-3xl font-semibold leading-snug">
-            온기는{" "}
-            <span className="text-[#F7D358] font-bold">사회 정신건강 예방</span>
-            을 위해 활동하는
-            <br />
-            비영리단체예요
-          </span>
-        </div>
+        
       </div>
       {/* 탭버튼 */}
       <div className="max-w-3xl mx-auto">
