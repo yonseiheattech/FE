@@ -12,17 +12,14 @@ export const AuthProvider = ({ children }) => {
     axiosInstance
       .get("/api/members/me")
       .then((res) => {
-        console.log("나는 AuthContext", res.data)
         setUser(res.data.username);
         setRole(res.data.role)
     
       })
       .catch(() => {
-        console.log("skrrr1")
         setUser(null);
       })
       .finally(() => {
-        console.log("skrrr2")
         setLoading(false)
       }
         );

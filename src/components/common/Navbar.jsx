@@ -1,14 +1,13 @@
 import { Globe } from "lucide-react";
 import { useAuth } from "../../contexts/AuthContext";
 import axiosInstance from "../../api/axiosInstance";
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 
 export default function Navbar() {
   const { user, isLoggedIn, role } = useAuth();
   const location = useLocation();
   const currentPath = location.pathname;
-
 
   return (
     <nav className="flex items-center justify-between px-8 py-4 shadow-sm bg-white">
@@ -21,34 +20,42 @@ export default function Navbar() {
 
       {/* Center - 메뉴 */}
       <ul className="flex gap-10 font-semibold text-sm text-black">
-      <li className={
-          currentPath.startsWith("/usage-guide")
-            ? "text-[#6B3E00] cursor-pointer font-bold"
-            : "hover:text-[#6B3E00] cursor-pointer"
-        }>
+        <li
+          className={
+            currentPath.startsWith("/usage-guide")
+              ? "text-[#6B3E00] cursor-pointer font-bold"
+              : "hover:text-[#6B3E00] cursor-pointer"
+          }
+        >
           <Link to="/usage-guide">이용 방법</Link>
         </li>
-        <li className={
-          currentPath.startsWith("/notice")
-            ? "text-[#6B3E00] cursor-pointer font-bold"
-            : "hover:text-[#6B3E00] cursor-pointer"
-        }>
-          {/* 공지사항 주소에 따라 수정 필요 */}
-          <Link to="/notice">공지사항</Link>
+        <li
+          className={
+            currentPath.startsWith("/notice")
+              ? "text-[#6B3E00] cursor-pointer font-bold"
+              : "hover:text-[#6B3E00] cursor-pointer"
+          }
+          onClick={() => alert("준비중입니다!")}
+        >
+          공지사항
         </li>
-        <li className={
-          currentPath.startsWith("/my-letter")
-            ? "text-[#6B3E00] cursor-pointer font-bold"
-            : "hover:text-[#6B3E00] cursor-pointer"
-        }>
+        <li
+          className={
+            currentPath.startsWith("/my-letter")
+              ? "text-[#6B3E00] cursor-pointer font-bold"
+              : "hover:text-[#6B3E00] cursor-pointer"
+          }
+        >
           <Link to="/my-letter">내 편지</Link>
         </li>
         {role === "VOLUNTEER" && (
-          <li className={
-            currentPath.startsWith("/volunteer/my-letter")
-              ? "text-[#6B3E00] cursor-pointer font-bold"
-              : "hover:text-[#6B3E00] cursor-pointer"
-          }>
+          <li
+            className={
+              currentPath.startsWith("/volunteer/my-letter")
+                ? "text-[#6B3E00] cursor-pointer font-bold"
+                : "hover:text-[#6B3E00] cursor-pointer"
+            }
+          >
             <Link to="/volunteer/my-letter">온기 우체부</Link>
           </li>
         )}
@@ -62,10 +69,8 @@ export default function Navbar() {
         </div>
         {isLoggedIn ? (
           <div className="flex items-center gap-2">
-            <span className="text-sm font-medium text-gray-800">
-              {user}님
-            </span>
-            <button 
+            <span className="text-sm font-medium text-gray-800">{user}님</span>
+            <button
               className="bg-[#6B3E00] text-white px-4 py-1.5 rounded-md text-sm font-semibold"
               onClick={() => {
                 axiosInstance

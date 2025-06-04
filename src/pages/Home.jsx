@@ -159,9 +159,9 @@ const Home = () => {
 
         {/* 맨 아래 버튼 3개 */}
         <div className="w-full flex flex-row justify-between gap-6">
-          <HomeBottomButton label="온기레터 구독하기" />
-          <HomeBottomButton label="파트너십 문의" />
-          <HomeBottomButton label="온기 후원하기" />
+          <HomeBottomButton  label="온기레터 구독하기" />
+          <HomeBottomButton  label="파트너십 문의" />
+          <HomeBottomButton  label="온기 후원하기" />
         </div>
       </div>
     </div>
@@ -192,7 +192,7 @@ function HomeCard({ img, alt, label, yellowCircle }) {
 // 홈 하단 버튼 컴포넌트
 function HomeBottomButton({ label }) {
   return (
-    <button className="w-[245px] h-[70px] flex justify-center items-center gap-2 border border-[#DCDCDC] rounded-[40px] bg-[#FFF3B3] shadow-[0_4px_4px_0px_rgba(0,0,0,0.04)] text-[#3A2A10] font-bold text-[18px]">
+    <button className="w-[245px] h-[70px] flex justify-center items-center gap-2 border border-[#DCDCDC] rounded-[40px] bg-[#FFF3B3] shadow-[0_4px_4px_0px_rgba(0,0,0,0.04)] text-[#3A2A10] font-bold text-[18px]"  onClick={() => alert(" 준비중입니다.")}>
       {label}
       <svg
         xmlns="http://www.w3.org/2000/svg"

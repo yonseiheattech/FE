@@ -131,7 +131,10 @@ const MapBox = () => {
           <img src="/logo.png" alt="logo" className="w-auto h-6" />
           <h2 className="text-lg font-bold">온기우편함 찾기</h2>
         </div>
-        <button className="border border-[#6B3E00] text-[#6B3E00] text-sm px-3 py-1 rounded-full">
+        <button
+          className="border border-[#6B3E00] text-[#6B3E00] text-sm px-3 py-1 rounded-full"
+          onClick={() => alert("조건 검색 기능은 아직 준비중입니다.")}
+        >
           조건 검색
         </button>
       </div>

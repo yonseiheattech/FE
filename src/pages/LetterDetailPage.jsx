@@ -134,9 +134,13 @@ const LetterDetailPage = () => {
                 value={thankYouMessage}
                 onChange={(e) => setThankYouMessage(e.target.value)}
                 rows={3}
+                maxLength={300}
                 className="border border-[#D6BA83] rounded px-4 py-2 w-full text-sm text-[#8A734F] placeholder:text-[#D6BA83] resize-none"
                 placeholder="감사 인사를 입력해주세요"
               />
+              <div className="text-xs text-[#D6BA83] text-right mt-1">
+                {thankYouMessage.length} / 300
+              </div>
               <button
                 onClick={handleThankYouSubmit}
                 className="mt-4 px-6 py-2 rounded bg-[#A38951] text-white text-sm font-semibold hover:bg-[#8A734F]"
