@@ -69,34 +69,7 @@ const Home = () => {
           </div>
         </section>
 
-        {/* 공지사항 박스 */}
-        <section>
-          <div className="w-full flex items-center justify-between bg-white rounded-3xl border border-[#DCDCDC] px-7 py-5 shadow-sm">
-            <span className="text-[#3A2A10] font-bold text-lg">공지사항</span>
-            <button>
-              <svg
-                className="w-6 h-6 stroke-gray-800"
-                fill="none"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  d="M12 5V19"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M5 12H19"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </button>
-          </div>
-        </section>
+        
       </div>
 
       {/* 오른쪽 영역 */}

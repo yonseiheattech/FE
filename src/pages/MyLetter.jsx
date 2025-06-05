@@ -25,9 +25,11 @@ const MyLetter = () => {
     axiosInstance
       .get("/api/letters/my")
       .then((response) => {
-        setLetters(response.data);
+        const sorted = response.data.sort(
+          (a, b) => new Date(b.issuedAt) - new Date(a.issuedAt)
+        );
+        setLetters(sorted);
         setLoading(false);
-        console.log(response.data);
       })
       .catch((error) => {
         console.error("편지 목록 가져오기 실패", error);

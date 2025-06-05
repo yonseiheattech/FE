@@ -11,13 +11,13 @@ const LoggedInBox = () => {
       {/* 프로필 영역 */}
       <div className="flex flex-col items-center mb-4">
         <img
-          src="/letter-icon.png"
+          src="/랜선 온기우체부.png"
           alt="편지 아이콘"
-          className="w-10 h-10 mb-1"
+          className="w-30 h-20 mb-1"
         />
         <div className="text-sm text-[#3A2A10] font-semibold">온기</div>
         <div className="text-xl font-bold">{user} 님</div>
-        <button className="mt-2 px-3 py-1 text-sm border border-gray-300 rounded-full bg-white shadow-sm hover:bg-gray-100">
+        <button className="mt-2 px-3 py-1 text-sm border border-gray-300 rounded-full bg-white shadow-sm hover:bg-gray-100" onClick={() => alert("준비중입니다.")}>
           내 정보 수정
         </button>
       </div>
@@ -49,19 +49,19 @@ const LoggedInBox = () => {
         </div>
         <div className="flex items-center justify-around">
           <div className="flex flex-col items-center text-sm">
-            <img src="/icon-send.png" alt="발송" className="w-7 h-7 mb-1" />
+            <img src="/랜선 온기우체부.png" alt="발송" className="w-14 h-10 mb-1" />
             <span>발송</span>
           </div>
           <div className="flex flex-col items-center text-sm">
             <img
-              src="/icon-delivery-yellow.png"
+              src="/랜선 온기우체부.png"
               alt="배송"
-              className="w-7 h-7 mb-1"
+              className="w-14 h-10 mb-1"
             />
             <span className="font-bold text-[#FFD233]">배송</span>
           </div>
           <div className="flex flex-col items-center text-sm">
-            <img src="/icon-arrival.png" alt="도착" className="w-7 h-7 mb-1" />
+            <img src="/랜선 온기우체부.png" alt="도착" className="w-14 h-10 mb-1" />
             <span>도착</span>
           </div>
         </div>

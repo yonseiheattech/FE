@@ -32,7 +32,7 @@ const VolLetterMenu = () => {
       {openEducation && (
         <div className="ml-2 mt-1 flex flex-col gap-1">
           <button
-            onClick={() => navigate("/education/guide")}
+            onClick={() => alert("준비중입니다.")}
             className="text-left text-sm text-[#8B6E3A] hover:text-[#3A2A10] px-2 py-1"
           >
             편지 작성 가이드라인

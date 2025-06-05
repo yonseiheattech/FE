@@ -1,5 +1,5 @@
 import LetterMenu from "../components/LetterMenu";
-import { useState} from "react";
+import { useState } from "react";
 import axiosInstance from "../api/axiosInstance";
 import CodeModal from "../components/code/CodeModal";
 import CodeRegisterModal from "../components/code/CodeRegisterModal";
@@ -8,7 +8,6 @@ const Code = () => {
   const [code, setCode] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
-
   const handleGenerateCode = async () => {
     try {
       const response = await axiosInstance.get("api/letters/generate-code");
@@ -31,9 +30,6 @@ const Code = () => {
       setIsRegisterModalOpen(false);
     }
   };
-
-
-  
 
   return (
     <div className="min-h-screen bg-[#FFFBF0] flex pt-10">
@@ -107,15 +103,21 @@ const Code = () => {
               <br />
               등록된 편지의 정보를 조회할 수 있어요
               <div className="mt-4">
-                <button onClick={() => setIsRegisterModalOpen(true)} className="bg-[#5D3B00] text-white px-4 py-2 rounded-md">
+                <button
+                  onClick={() => setIsRegisterModalOpen(true)}
+                  className="bg-[#5D3B00] text-white px-4 py-2 rounded-md"
+                >
                   등록하기
                 </button>
+
               </div>
             </div>
           </section>
         </div>
       </div>
-      {isModalOpen && <CodeModal code={code} onClose={() => setIsModalOpen(false)} />}
+      {isModalOpen && (
+        <CodeModal code={code} onClose={() => setIsModalOpen(false)} />
+      )}
       {isRegisterModalOpen && (
         <CodeRegisterModal
           onSubmit={handleSubmitCode}

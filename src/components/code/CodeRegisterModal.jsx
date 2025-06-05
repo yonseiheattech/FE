@@ -1,7 +1,49 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axiosInstance from "../../api/axiosInstance";
 
 const CodeRegisterModal = ({ onSubmit, onClose }) => {
   const [inputCode, setInputCode] = useState("");
+  const [myRegisterCodes, setMyRegisterCodes] = useState(null);
+  const [issuedAt, setIssuedAt] = useState(null);
+  
+
+  useEffect(() => {
+    const fetchLatestIssuedCode = async () => {
+      try {
+        const response = await axiosInstance.get("/api/letters/my");
+  
+        const issuedLetters = response.data
+          .filter((letter) => letter.status === "ISSUED");
+  
+        if (issuedLetters.length > 0) {
+          // 가장 최근 코드 찾기 (issuedAt 기준 내림차순 정렬 후 첫 번째)
+          const latest = issuedLetters.sort(
+            (a, b) => new Date(b.issuedAt) - new Date(a.issuedAt)
+          )[0];
+
+          setIssuedAt(latest.issuedAt);
+          setMyRegisterCodes(latest.code); // 코드 1개만 배열로 저장
+        } else {
+          setMyRegisterCodes(null);
+          setIssuedAt(null);
+        }
+      } catch (error) {
+        console.error("발급한한된 코드 조회 실패:", error);
+      }
+    };
+
+
+  
+    fetchLatestIssuedCode();
+  }, []);
+
+  const formatDateTime = (iso) => {
+    const date = new Date(iso);
+    return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(
+      date.getDate()
+    ).padStart(2, "0")} ${String(date.getHours()).padStart(2, "0")}:${String(
+      date.getMinutes()).padStart(2, "0")}`;
+  };
 
   const handleSubmit = () => {
     if (!inputCode.trim()) return;
@@ -35,6 +77,26 @@ const CodeRegisterModal = ({ onSubmit, onClose }) => {
         >
           ✕
         </button>
+        {/* 아래에 코드 목록 보여주기 */}
+        <div className="mt-6 text-left mb-4">
+          <p className="text-sm font-semibold text-[#3A2A10] mb-2">
+            내가 가장 최근 발급한 코드
+          </p>
+          {myRegisterCodes ? (
+            <>
+              <ul className="list-disc list-inside text-sm text-[#3A2A10]">
+                <li>{myRegisterCodes}</li>
+              </ul>
+              {issuedAt && (
+                <p className="text-xs text-gray-500 mt-1">
+                  발급일: {formatDateTime(issuedAt)}
+                </p>
+              )}
+            </>
+          ) : (
+            <p className="text-sm text-gray-400">최근에 발급한 코드가 없습니다.</p>
+          )}
+        </div>
 
         <button
           onClick={handleSubmit}
@@ -42,6 +104,8 @@ const CodeRegisterModal = ({ onSubmit, onClose }) => {
         >
           등록
         </button>
+
+        
       </div>
     </div>
   );
