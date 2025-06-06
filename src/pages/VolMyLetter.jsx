@@ -26,7 +26,7 @@ const VolMyLetter = () => {
 
   const fetchLetters = () => {
     axiosInstance
-      .get("/api/letters/my")
+      .get("/api/letters/vol/my")
       .then((response) => {
         const pureLetters = response.data.map(letter => ({
           ...letter,
